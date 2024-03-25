@@ -5,12 +5,10 @@ using _Source.ScriptableObjects;
 using _Source.View;
 using UnityEngine;
 
-
 namespace _Source.Core
 {
     public class CardGame : MonoBehaviour
     {
-
         private static CardGame _instance;
 
         [SerializeField] private GameObject cardPrefab;
@@ -21,7 +19,7 @@ namespace _Source.Core
         [SerializeField] public int HandCapacity;
         [field: SerializeField] private List<CardAsset> StartingCards { get; set; } = new List<CardAsset>();
         [field: SerializeField] private List<CardAsset> Deck { get; set; } = new List<CardAsset>();
-        
+
         private readonly Dictionary<CardInstance, CardView> _cards = new Dictionary<CardInstance, CardView>();
 
         public static CardGame Instance
@@ -41,7 +39,6 @@ namespace _Source.Core
 
         private void Start()
         {
-            
             InitializeGame();
         }
 
@@ -56,25 +53,6 @@ namespace _Source.Core
 
         public CardView GetCardView(CardInstance instance) => _cards[instance];
 
-        public void StartTurn()
-        {
-            foreach (int playerLayoutId in playerLayoutIds)
-            {
-                var cardsInHand = GetCardsInLayout(playerLayoutId);
-
-                var currCardsCount = cardsInHand.Count;
-                while (currCardsCount < HandCapacity)
-                {
-                    var cardsInDeck = GetCardsInLayout(deckLayoutId);
-                    if (cardsInDeck.Count == 0)
-                        return;
-                    var card = cardsInDeck[0];
-                    card.MoveToLayout(playerLayoutId);
-                    ++currCardsCount;
-                }
-            }
-        }
-
         public void ShuffleLayout(int layoutId)
         {
             var cards = GetCardsInLayout(layoutId);
@@ -85,23 +63,15 @@ namespace _Source.Core
             }
         }
 
-        public void RecalculateLayout(int layoutId)
-        {
-            var cardsInLayout = GetCardsInLayout(layoutId);
-
-            for (int i = 0; i < cardsInLayout.Count; ++i)
-            {
-                var card = cardsInLayout[i];
-                card.CardPosition = i;
-            }
-        }
-
         private void InitializeGame()
         {
             foreach (var playerLayout in playerLayoutIds)
-            foreach (var cardAsset in StartingCards)
-                CreateCard(cardAsset, playerLayout);
-
+            {
+                foreach (var cardAsset in StartingCards)
+                {
+                    CreateCard(cardAsset, playerLayout);
+                }
+            }
             InitializeDeck();
         }
 
@@ -123,6 +93,36 @@ namespace _Source.Core
         {
             foreach (var cardAsset in Deck)
                 CreateCard(cardAsset, deckLayoutId);
+        }
+
+        public void RecalculateLayout(int layoutId)
+        {
+            var cardsInLayout = GetCardsInLayout(layoutId);
+
+            for (int i = 0; i < cardsInLayout.Count; ++i)
+            {
+                var card = cardsInLayout[i];
+                card.CardPosition = i;
+            }
+        }
+
+        public void StartTurn()
+        {
+            foreach (int playerLayoutId in playerLayoutIds)
+            {
+                var cardsInHand = GetCardsInLayout(playerLayoutId);
+
+                var currCardsCount = cardsInHand.Count;
+                while (currCardsCount < HandCapacity)
+                {
+                    var cardsInDeck = GetCardsInLayout(deckLayoutId);
+                    if (cardsInDeck.Count == 0)
+                        return;
+                    var card = cardsInDeck[0];
+                    card.MoveToLayout(playerLayoutId);
+                    ++currCardsCount;
+                }
+            }
         }
     }
 }

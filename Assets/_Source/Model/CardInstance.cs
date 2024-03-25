@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using _Source.Core;
 using _Source.ScriptableObjects;
 using _Source.View;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace _Source.Model {
         public void MoveToLayout(int layoutId)
         {
             LayoutId = layoutId;
-            // Update CardPosition based on the layout
+            CardPosition = CardGame.Instance.GetCardsInLayout(layoutId).Count;
         }
     }
 
