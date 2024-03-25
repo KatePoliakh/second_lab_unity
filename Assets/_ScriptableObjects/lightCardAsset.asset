@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160f42f342b149a44848c3193e5dfe81, type: 3}
+  m_Name: lightCardAsset
+  m_EditorClassIdentifier: 
+  cardName: lightCard
+  cardColor: {r: 0.99371064, g: 0.9382265, b: 0.7655946, a: 0}
+  cardImage: {fileID: 21300000, guid: cdff45579ded43145a56bf87ab6f77b0, type: 3}
